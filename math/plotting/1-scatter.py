@@ -1,19 +1,23 @@
 #!/usr/bin/env python3
-import numpy as np  # imports NumPy library and allows you to refer to it
-import matplotlib.pyplot as plt  # plotting library for Python
-
+import numpy as np
+import matplotlib.pyplot as plt
 
 def scatter():
+
+    mean = [69, 0]
+    cov = [[15, 8], [8, 15]]
     np.random.seed(5)
+    x, y = np.random.multivariate_normal(mean, cov, 2000).T
+    y += 180
+    plt.figure(figsize=(6.4, 4.8))  # Optional: setting the figure size (default is 6.4 x 4.8 inches)
 
-mean = [69, 0]  # a list mean with two elements
-cov = [[15, 8], [8, 15]]  # a 2x2 list cov
-""" generates 2000 random samples from multivariate normal distribution."""
-x, y = np.random.multivariate_normal(mean, cov, 2000).T
-y += 180  # adds 180 to every element in the y array
+    # Scatter plot
+    plt.scatter(x, y, color='m')  # Plot the data as magenta points
+    plt.xlabel('Height (in)')  # Set x-axis label
+    plt.ylabel('Weight (lbs)')  # Set y-axis label
+    plt.title("Men's Height vs Weight")  # Set the title
 
-plt.scatter(x, y, color='m')  # creates a scatter plot using matplotlib
-plt.xlabel('height(in)')  # xaxis is height
-plt.ylabel('weight(lbs)')  # yaxis is weight
-plt.title("Men's Height vs Weight")  # Title of scatter plot
-plt.show()
+    plt.show()  # Display the plot
+
+# Call the scatter function to display the plot
+scatter()
