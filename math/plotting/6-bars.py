@@ -4,23 +4,48 @@ import matplotlib.pyplot as plt
 
 
 def bars():
-        np.random.seed(5)
-fruit = np.random.randint(0, 20, (4, 3))
+    np.random.seed(5)
 
-fruit_labels = ['Apples', 'Bananas', 'Oranges', 'Peaches']
-person_labels = ['Farrah', 'Fred', 'Felicia']
+    # fruit matrix: rows are fruits (apples, bananas, oranges, peaches)
+    # columns are people (Farrah, Fred, Felicia)
+    fruit = np.random.randint(0, 20, (4, 3))
 
-colors = ['red', 'yellow', '#ff8000', '#ffe5b4']
+    # Fruit names for the rows (apples, bananas, oranges, peaches)
+    fruit_names = ['Apples', 'Bananas', 'Oranges', 'Peaches']
 
-plt.bar(person_labels, fruit[0], color=colors[0], label=fruit_labels[0])
-for i in range(1, len(fruit_labels)):
-        plt.bar(person_labels, fruit[i], bottom=np.sum(fruit[:i], axis=0), color=colors[i], label=fruit_labels[i])
+    # Colors for each fruit type
+    colors = ['red', 'yellow', '#ff8000', '#ffe5b4']
 
-plt.xlabel('Person')
-plt.ylabel('Quantity of Fruit')
-plt.title('Number of Fruit per Person')
-plt.ylim(0, 80)
-plt.yticks(np.arange(0, 81, 10))
-plt.legend()
+    # Plot the stacked bar chart
+    plt.figure(figsize=(6.4, 4.8))  # Optional: set the figure size
 
-plt.show()
+    # Create a stacked bar chart
+    # Bottom argument ensures stacking of bars
+    plt.bar([0, 1, 2], fruit[0], color=colors[0], label=fruit_names[0], width=0.5)  # Apples
+    plt.bar([0, 1, 2], fruit[1], bottom=fruit[0], color=colors[1], label=fruit_names[1], width=0.5)  # Bananas
+    plt.bar([0, 1, 2], fruit[2], bottom=fruit[0] + fruit[1], color=colors[2], label=fruit_names[2],
+            width=0.5)  # Oranges
+    plt.bar([0, 1, 2], fruit[3], bottom=fruit[0] + fruit[1] + fruit[2], color=colors[3], label=fruit_names[3],
+            width=0.5)  # Peaches
+
+    # Labels and title
+    plt.xlabel('Person')  # x-axis label
+    plt.ylabel('Quantity of Fruit')  # y-axis label
+    plt.title('Number of Fruit per Person')  # Title of the plot
+
+    # Set y-axis range and ticks
+    plt.ylim(0, 80)  # y-axis range from 0 to 80
+    plt.yticks(range(0, 81, 10))  # y-axis ticks every 10 units
+
+    # Set x-axis labels (names of the people)
+    plt.xticks([0, 1, 2], ['Farrah', 'Fred', 'Felicia'])  # x-axis ticks with names
+
+    # Add legend
+    plt.legend(title="Fruit Types")
+
+    # Show the plot
+    plt.show()
+
+
+# Call the bars function to generate the plot
+bars()
