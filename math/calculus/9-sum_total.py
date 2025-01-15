@@ -1,9 +1,30 @@
 #!/usr/bin/env python3
-"""sum squared"""
+
+"""
+Module: sum_total
+Description: This module defines a function to compute
+the sum of the squares of the first n integers.
+The sum is calculated using a mathematical formula for efficiency:
+    sum = n * (n + 1) * (2 * n + 1) / 6
+"""
 
 
 def summation_i_squared(n: int) -> int | None:
-    """returns sum of n squared"""
-    if n < 1 or type(n) != int:
+    """
+    Function: summation_i_squared
+    Description: Calculates the sum of squares of the first n positive integers.
+    The sum is computed using the formula: n * (n + 1) * (2 * n + 1) / 6
+    or iteratively using map and sum.
+
+    Parameters:
+    n (int): A positive integer specifying the upper limit for the sum of squares.
+
+    Returns:
+    int: The sum of the squares of integers from 1 to n.
+    None: If the input is not a positive integer.
+    """
+    if not isinstance(n, int) or n <= 0:
         return None
-    return sum(map(lambda n: pow(n, 2), range(n + 1)))
+
+    # Use the efficient formula for sum of squares for fast computation
+    return (n * (n + 1) * (2 * n + 1)) // 6
