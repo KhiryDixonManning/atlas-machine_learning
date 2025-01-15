@@ -7,7 +7,9 @@ the sum of squares of the first n integers using the formula:
     sum = n * (n + 1) * (2 * n + 1) / 6
 """
 
-def summation_i_squared(n: int) -> int | None:
+from typing import Union
+
+def summation_i_squared(n: int) -> Union[int, None]:
     """
     Description: Calculates the sum of squares of the first n positive integers.
     Uses the formula: n * (n + 1) * (2 * n + 1) / 6
