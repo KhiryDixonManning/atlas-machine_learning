@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import numpy as np  # imports NumPy library and allows you to refer to it
 import matplotlib.pyplot as plt  # plotting library for Python
+scatter = __import__('1-scatter').scatter
 
 mean = [69, 0]  # a list mean with two elements
 cov = [[15, 8], [8, 15]]  # a 2x2 list cov
