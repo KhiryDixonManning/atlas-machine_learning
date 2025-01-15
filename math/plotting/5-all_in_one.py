@@ -2,10 +2,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+y0 = np.arange(0, 11) ** 3
 
-def all_in_one():
-
-    y0 = np.arange(0, 11) ** 3
 mean = [69, 0]
 cov = [[15, 8], [8, 15]]
 np.random.seed(5)
