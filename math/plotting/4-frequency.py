@@ -17,8 +17,4 @@ def frequency():
     plt.ylim(0, 30)
     plt.show()
 
-    print("Plot generated successfully!")  # This is 32 characters long
-
-
-# Call the function to generate the plot
 frequency()
