@@ -2,8 +2,9 @@
 
 """
 Module: 17-integrate
-Description: This module defines a function to compute the indefinite integral of a polynomial,
-where the polynomial is represented by a list of coefficients. The function returns the coefficients of
+module defines function to compute indefinite integral of polynomial,
+where the polynomial is represented by a list of coefficients.
+The function returns the coefficients of
 the integral, including an optional constant of integration.
 """
 
@@ -11,8 +12,9 @@ the integral, including an optional constant of integration.
 def poly_integral(poly, C=0):
     """
     Function: poly_integral
-    Description: Computes the indefinite integral of a polynomial represented by a list of coefficients.
-    The index of the list corresponds to the power of x, and the value at each index is the coefficient.
+    Computes the indefinite integral of a polynomial by list of coefficients
+    The index of the list corresponds to the power of x,
+    and the value at each index is the coefficient.
 
     Parameters:
     poly (list): A list of coefficients representing the polynomial.
@@ -20,13 +22,13 @@ def poly_integral(poly, C=0):
     C (int, float): The constant of integration (default is 0).
 
     Returns:
-    list: A list of coefficients representing the integral of the polynomial.
-    None: If the input is invalid (non-list, empty list, or non-numeric coefficients).
+    list: list coefficients representing integral of the polynomial.
+    None: If input is invalid
 
     Notes:
-    - The function handles polynomials of any degree and includes the constant of integration.
-    - Non-integer results are kept as floats, while integer results are cast to `int`.
-    - If the polynomial consists solely of zeros, the function returns the constant of integration alone.
+    - function handles polynomials of any degree/constant of integration.
+    - Non-integer results kept as floats, while integer results cast to `int`.
+    - If polynomial only zeros, function return constant of integration alone.
     """
     # Input validation
     if not isinstance(poly, list) or len(poly) < 1:
@@ -43,9 +45,11 @@ def poly_integral(poly, C=0):
     # Insert the constant of integration at the start of the list
     integral = [C]
 
-    # Compute the integral by dividing each coefficient by its power (index + 1)
+    # Compute integral by dividing each coefficient by its power (index + 1)
     for i, coef in enumerate(poly):
         new_coef = coef / (i + 1)
-        integral.append(int(new_coef) if new_coef.is_integer() else new_coef)
+        integral.append(
+            int(new_coef) if new_coef.is_integer() else new_coef
+        )
 
     return integral
