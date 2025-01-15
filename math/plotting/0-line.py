@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import numpy as np
 import matplotlib.pyplot as plt
-line = __import__('0-line').line
+# line = __import__('0-line').line
 
 y = np.arange(0, 11) ** 3
 
