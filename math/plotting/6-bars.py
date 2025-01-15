@@ -2,7 +2,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-np.random.seed(5)
+
+def bars():
+
+        np.random.seed(5)
 fruit = np.random.randint(0, 20, (4, 3))
 
 fruit_labels = ['Apples', 'Bananas', 'Oranges', 'Peaches']

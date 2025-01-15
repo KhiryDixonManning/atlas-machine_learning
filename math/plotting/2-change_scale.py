@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import numpy as np
 import matplotlib.pyplot as plt
-change_scale = __import__('2-change_scale').change_scale
+
 
 def change_scale():
 
