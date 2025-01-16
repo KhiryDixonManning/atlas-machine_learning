@@ -1,9 +1,16 @@
 #!/usr/bin/env python3
+"""
+module 4-frequency contains function frequency
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
 
 
 def frequency():
+    """
+    function plots frequency of grades as well as limits figure size
+    """
     np.random.seed(5)
     student_grades = np.random.normal(68, 15, 50)
     plt.figure(figsize=(6.4, 4.8))
