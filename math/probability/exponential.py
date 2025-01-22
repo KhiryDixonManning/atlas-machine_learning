@@ -55,4 +55,5 @@ class Exponential():
             return 0  # Time period can't be negative, so return 0 if x is out of range
 
         # Calculate CDF: 1 - e^(-λ * x)
-        return 1 - (Exponential.e ** (-self.lambtha * x))
+        cdf = 1 - (Exponential.e ** (-self.lambtha * x))
+        return cdf
