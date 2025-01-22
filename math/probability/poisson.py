@@ -3,6 +3,7 @@
 Script to calculate a Poisson distribution
 """
 
+
 class Poisson():
     """
     Class to represent a Poisson distribution and calculate its CDF and PMF.
@@ -34,16 +35,21 @@ class Poisson():
     def pmf(self, k):
         """
         Method to calculate the Probability Mass Function for Poisson
-        k: integer value representing the number of occurrences
-        return: PMF
+        k: integer value representing the number of occurrences (successes)
+        return: PMF value for k
         """
+        # Convert k to an integer if it is not already
         k = int(k)
+
+        # If k is negative, return 0 since it's out of range for a Poisson distribution
         if k < 0:
             return 0
+
         # Calculate factorial of k
         factorial_k = 1
         for i in range(1, k + 1):
             factorial_k *= i
+
         # Calculate and return PMF
         pmf = Poisson.e ** -self.lambtha * self.lambtha ** k / factorial_k
         return pmf
