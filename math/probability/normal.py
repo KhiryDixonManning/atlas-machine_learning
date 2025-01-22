@@ -58,9 +58,10 @@ class Normal():
         x: the x value for which to calculate the PDF
         return: the PDF value
         """
-        p1 = 1 / (self.stddev * ((2 * Normal.pi) ** 0.5))  # Normalizing factor
-        p2 = ((x - self.mean) ** 2) / (2 * (self.stddev ** 2))  # Exponent part
-        return p1 * Normal.e ** (-p2)
+        # Calculate the PDF using the normal distribution formula
+        coefficient = 1 / (self.stddev * (2 * Normal.pi) ** 0.5)  # Normalizing factor
+        exponent = -((x - self.mean) ** 2) / (2 * (self.stddev ** 2))  # Exponent part
+        return coefficient * Normal.e ** exponent
 
     def cdf(self, x):
         """
