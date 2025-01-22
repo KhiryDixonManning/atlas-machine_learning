@@ -57,13 +57,17 @@ class Poisson():
     def cdf(self, k):
         """
         Method to calculate the Cumulative Distribution Function (CDF)
-        k: integer value representing the number of occurrences
-        return: CDF
+        k: integer value representing the number of occurrences (successes)
+        return: CDF value for k
         """
+        # Convert k to an integer if it is not already
         k = int(k)
+
+        # If k is negative, return 0 since it's out of range for a Poisson distribution
         if k < 0:
             return 0
-        # Calculate and return CDF
+
+        # Calculate and return CDF by summing PMF values from 0 to k
         cdf = 0
         for i in range(k + 1):
             cdf += self.pmf(i)
