@@ -3,6 +3,7 @@
 Script to calculate an Exponential distribution
 """
 
+
 class Exponential():
     """
     Class to represent an Exponential distribution and calculate its CDF and PDF.
@@ -34,23 +35,24 @@ class Exponential():
     def pdf(self, x):
         """
         Method to calculate the Probability Density Function (PDF)
-        x: value at which to calculate the PDF
-        return: PDF value
+        x: time period for which to calculate the PDF
+        return: PDF value for x
         """
         if x < 0:
-            return 0
-        else:
-            # Calculate PDF: λ * e^(-λ * x)
-            pdf = self.lambtha * (Exponential.e ** (-self.lambtha * x))
-            return pdf
+            return 0  # Time period can't be negative, so return 0 if x is out of range
+
+        # Calculate PDF: λ * e^(-λ * x)
+        pdf = self.lambtha * (Exponential.e ** (-self.lambtha * x))
+        return pdf
 
     def cdf(self, x):
         """
         Method to calculate the Cumulative Distribution Function (CDF)
-        x: value at which to calculate the CDF
-        return: CDF value
+        x: time period for which to calculate the CDF
+        return: CDF value for x
         """
         if x < 0:
-            return 0
+            return 0  # Time period can't be negative, so return 0 if x is out of range
+
         # Calculate CDF: 1 - e^(-λ * x)
         return 1 - (Exponential.e ** (-self.lambtha * x))
