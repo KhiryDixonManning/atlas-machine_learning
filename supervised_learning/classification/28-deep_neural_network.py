@@ -7,7 +7,7 @@ import os.path
 
 
 class DeepNeuralNetwork():
-    """class representing a Deep Neural Network with multiple hidden layers that
+    """class representing a Deep Neural Network with multiple hidden layer that
         performs binary classification
 
         Instance Attributes:
@@ -16,12 +16,12 @@ class DeepNeuralNetwork():
             weights (dict): all weights and biases
             """
 
-    def __init__(self, nx, layers, activation='sig'):
+    def __init__(self, nx,  layers, activation='sig'):
         """ initialize Deep Neural Network
 
             Parameters:
-                nx (int) - number of input features
-                layers (list) - number of nodes in each hidden layer """
+                nx (int) - nmber of input features
+                layers (int) - number of nodes in the hidden layer """
         if type(nx) is not int:
             raise TypeError("nx must be an integer")
         if nx < 1:
@@ -35,12 +35,13 @@ class DeepNeuralNetwork():
         layers.insert(0, nx)
         self.__cache = {}
         self.__weights = {}
+        self.__weights = {}
         for lay in range(1, self.__L + 1):
             if layers[lay] < 1:
                 raise TypeError("layers must be a list of positive integers")
             he = np.random.randn(layers[lay], layers[lay - 1])
             layer = (layers[lay - 1])
-            self.__weights["W" + str(lay)] = he * np.sqrt(2.0 / layer)
+            self.weights["W" + str(lay)] = he * np.sqrt(2.0 / layer)
             self.__weights["b" + str(lay)] = np.zeros((layers[lay], 1))
 
     @property
@@ -82,14 +83,14 @@ class DeepNeuralNetwork():
 
     def softmax(self, z):
         """ softmax function """
-        ez = np.exp(z - np.max(z, axis=0, keepdims=True))  # subtracting max for numerical stability
+        ez = np.exp(z - np.max(z))
         return ez / np.sum(ez, axis=0, keepdims=True)
 
     def one_hot_encode(self, Y, classes):
         """ function that decodes a one hot encoded vector """
         if not isinstance(Y, np.ndarray) or not isinstance(classes, int):
             return None
-        if classes < 2 or classes <= np.max(Y):
+        if classes < 2 or classes < Y[max(Y - 1)]:
             return None
         encoded = np.zeros((classes, len(Y)))
         for x, y in enumerate(Y):
@@ -128,28 +129,44 @@ class DeepNeuralNetwork():
         return res, self.cost(Y, A)
 
     def gradient_descent(self, Y, cache, alpha=0.05):
-        """ one pass of backpropagation/gradient descent """
+        """ one pass of backprogagation/gradient descent """
         N = Y.shape[1]
-        for lay in range(self.__L, 0, -1):
-            W_cur = self.__weights["W" + str(lay)]
-            A_cur = cache["A" + str(lay)]
-            A_prev = cache["A" + str(lay - 1)] if lay > 1 else cache["A0"]
-            b_cur = self.__weights["b" + str(lay)]
+        leng = len(cache)
+        W_cur = self.__weights["W" + str(leng - 1)]
+        A_cur = cache["A" + str(leng - 1)]
+        A_prev = cache["A" + str(leng - 2)]
+        b_cur = self.__weights["b" + str(leng - 1)]
 
-            if lay == self.__L:
-                dz = A_cur - Y
-            else:
+        adj = {}
+
+        X = cache["A0"]
+        dz2 = (A_cur - Y)
+        dW2 = (1 / N) * np.dot(dz2, A_prev.T)
+        db2 = (1 / N) * np.sum(dz2, axis=1, keepdims=True)
+
+        adj["W" + str(leng - 1)] = W_cur - alpha * dW2
+        adj["b" + str(leng - 1)] = b_cur - alpha * db2
+
+        for lay in range(leng - 2, 0, -1):
+            if lay > 0:
+                W_cur = self.__weights["W" + str(lay)]
+                W_prev = self.__weights["W" + str(lay + 1)]
+                A_cur = cache["A" + str(lay)]
+                A_prev = cache["A" + str(lay - 1)]
+                b_cur = self.__weights["b" + str(lay)]
                 if self.__activation == 'sig':
                     dg = self.sig_deriv(A_cur)
                 else:
                     dg = self.tanh_derv(A_cur)
-                dz = np.dot(self.__weights["W" + str(lay + 1)].T, dz) * dg
+                dz1 = (np.dot(W_prev.T, dz2)) * dg
+                dw1 = (1 / N) * np.dot(dz1, A_prev.T)
+                db1 = (1 / N) * np.sum(dz1, axis=1, keepdims=True)
+                dz2 = dz1
 
-            dW = (1 / N) * np.dot(dz, A_prev.T)
-            db = (1 / N) * np.sum(dz, axis=1, keepdims=True)
+                adj["W" + str(lay)] = W_cur - alpha * dw1
+                adj["b" + str(lay)] = b_cur - alpha * db1
 
-            self.__weights["W" + str(lay)] -= alpha * dW
-            self.__weights["b" + str(lay)] -= alpha * db
+        self.__weights = adj
 
     def train(self, X, Y, iterations=5000, alpha=0.05, verbose=True,
               graph=True, step=100):
@@ -193,8 +210,9 @@ class DeepNeuralNetwork():
         """ saves instance object in pickle file """
         if '.pkl' not in filename:
             filename = '{}.pkl'.format(filename)
-        with open(filename, 'wb') as file:
-            pickle.dump(self, file)
+        file = open(filename, 'wb')
+        pickle.dump(self, file)
+        file.close()
 
     @staticmethod
     def load(filename):
