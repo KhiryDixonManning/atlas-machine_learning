@@ -45,7 +45,3 @@ def bars():
 
     # Show the plot
     plt.show()
-
-
-# Call the bars function to generate the plot
-bars()
