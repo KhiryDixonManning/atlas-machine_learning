@@ -44,5 +44,3 @@ def autoencoder(input_dims, filters, latent_dims):
     autoencode.compile(optimizer='adam', loss='binary_crossentropy')
 
     return encode, decode, autoencode
-
-//
